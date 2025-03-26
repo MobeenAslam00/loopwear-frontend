@@ -425,7 +425,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="container mx-auto px-4 mb-16">
+      {/* <div className="container mx-auto px-4 mb-16">
         <div className="bg-[#6b3419]/10 rounded-lg p-8 text-center">
           <h3 className="text-2xl font-serif mb-4 text-[#6b3419]">Quick Actions</h3>
           <p className="mb-6 max-w-2xl mx-auto text-gray-700">
@@ -439,7 +439,7 @@ export default function AdminDashboard() {
             <Button className="bg-[#6b3419] hover:bg-[#5a2c15] text-white px-6 py-2 rounded-full">Manage Orders</Button>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Footer */}
       <footer className="w-full bg-[#6b3419] py-10 text-white">

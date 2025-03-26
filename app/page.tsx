@@ -334,9 +334,9 @@ export default function Home() {
                 Rent. Wear. Return. Repeat — Sustainable Fashion at Your Fingertips.
               </p>
               <div>
-                <button className="bg-[#6d4534] text-white px-4 sm:px-6 py-2 sm:py-3 rounded hover:bg-[#5a3a2c] transition-colors text-sm sm:text-base">
+                <Link href={'/products?type=rent'} className="bg-[#6d4534] text-white px-4 sm:px-6 py-2 sm:py-3 rounded hover:bg-[#5a3a2c] transition-colors text-sm sm:text-base">
                   Explore Now
-                </button>
+                </Link>
               </div>
             </div>
 

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { Play, Pause } from "lucide-react"
+import Link from "next/link"
 
 export default function VideoSection() {
   const [isPlaying, setIsPlaying] = useState(false)
@@ -81,9 +82,9 @@ export default function VideoSection() {
               No Budget? No Problem — Rent the Look with our seamless renting process and Rock the Style
             </p>
             <div>
-              <button className="bg-[#6d4534] text-white px-8 py-3 rounded hover:bg-[#5a3a2c] transition-colors text-lg">
+              <Link href={'/products?type=rent'} className="bg-[#6d4534] text-white px-8 py-3 rounded hover:bg-[#5a3a2c] transition-colors text-lg">
                 Rent Now
-              </button>
+              </Link>
             </div>
           </div>
         </div>
