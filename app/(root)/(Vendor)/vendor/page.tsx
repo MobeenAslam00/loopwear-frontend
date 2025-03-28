@@ -14,6 +14,9 @@ import {
   BringToFront,
   Lock,
   Home,
+  MoreVertical,
+  Pencil,
+  Trash2,
 } from "lucide-react"
 import TopBanner from "@/app/components/global/top-banner"
 import { useRouter } from "next/navigation"
@@ -60,6 +63,70 @@ export default function VendorPage() {
 
   function navigate(path: string) {
     router.push(path)
+  }
+
+
+  const [products, setProducts] = useState<any>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [showFilters, setShowFilters] = useState(false)
+  const [page, setPage] = useState(1)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const limit = 10
+
+  useEffect(() => {
+    fetchProducts()
+  }, [page])
+
+  const fetchProducts = async () => {
+    try {
+      const user:any = localStorage.getItem("user")
+      const parsedUser = JSON.parse(user)
+      if (!parsedUser.userId) throw new Error("User ID not found")
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_LOOP_SERVER}/product/getAllProductsByUserId?userId=${parsedUser?.userId}&limit=${limit}&page=${page}`,
+      )
+ 
+      if (!response.ok) {
+        throw new Error("Failed to fetch products")
+      }
+
+      const data = await response.json() 
+      console.log(data.products);
+      setProducts(data.products || [])
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to fetch products")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleDelete = async (productId: string) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOOP_SERVER}/product/${productId}`, {
+        method: "DELETE",
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to delete product")
+      }
+
+      // Refresh products list
+      fetchProducts()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete product")
+    }
+  }
+
+  const handleEdit = (product: any) => {
+    setSelectedProduct(product)
+    setIsEditModalOpen(true)
+  }
+
+  const handleEditSuccess = () => {
+    fetchProducts()
   }
 
   return (
@@ -136,13 +203,7 @@ export default function VendorPage() {
                 <Plus className="h-4 w-4 text-[#6b3419]" />
                 <span>Add Product</span>
               </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => navigate("/lender")}
-                className="py-3 px-4 flex items-center gap-2 cursor-pointer hover:bg-[#6b3419]/10 hover:text-[#6b3419] focus:bg-[#6b3419]/10 focus:text-[#6b3419]"
-              >
-                <FileText className="h-4 w-4 text-[#6b3419]" />
-                <span>Vendor Policy</span>
-              </DropdownMenuItem>
+             
               <DropdownMenuItem
                 onClick={() => !hasStore && !storeStatus && navigate("/create-store")}
                 disabled={!isLoggedIn || hasStore || storeStatus}
@@ -189,7 +250,8 @@ export default function VendorPage() {
           {/* Extra Earning */}
           <div className="bg-white rounded-lg shadow-md p-8 flex flex-col items-center transform transition-transform hover:scale-105">
             <div className="w-24 h-24 mb-6">
-              <BringToFront className="h-24 w-24 text-[#6b3419] mb-6" />
+              {/* <BringToFront className="h-24 w-24 text-[#6b3419] mb-6" /> */}
+              <Image alt="logo" src={'/admin/user.png'} height={24} width={24} className="h-24 w-24 text-[#6b3419] mb-6" />
             </div>
             <h3 className="text-xl font-serif text-center mb-4 text-[#6b3419]">Extra Dresses = Extra Earning</h3>
             <p className="text-center text-sm leading-relaxed text-gray-700">
@@ -202,7 +264,8 @@ export default function VendorPage() {
           {/* Closet Space */}
           <div className="bg-white rounded-lg shadow-md p-8 flex flex-col items-center transform transition-transform hover:scale-105">
             <div className="w-24 h-24 mb-6">
-              <FolderClosed className="h-24 w-24 text-[#6b3419] mb-6" />
+              {/* <FolderClosed className="h-24 w-24 text-[#6b3419] mb-6" /> */}
+              <Image alt="logo" src={'/admin/summ.png'} height={24} width={24} className="h-24 w-24 text-[#6b3419] mb-6" />
             </div>
             <h3 className="text-xl font-serif text-center mb-4 text-[#6b3419]">Who doesn't love more closet space?</h3>
             <p className="text-center text-sm leading-relaxed text-gray-700">
@@ -214,7 +277,8 @@ export default function VendorPage() {
           {/* Lending Process */}
           <div className="bg-white rounded-lg shadow-md p-8 flex flex-col items-center transform transition-transform hover:scale-105">
             <div className="w-24 h-24 mb-6">
-              <BadgeCheck className="h-24 w-24 text-[#6b3419] mb-6" />
+              {/* <BadgeCheck className="h-24 w-24 text-[#6b3419] mb-6" /> */}
+              <Image alt="logo" src={'/admin/susp.png'} height={24} width={24} className="h-24 w-24 text-[#6b3419] mb-6" />
             </div>
             <h3 className="text-xl font-serif text-center mb-4 text-[#6b3419]">Effortless Lending process</h3>
             <p className="text-center text-sm leading-relaxed text-gray-700">
@@ -261,6 +325,41 @@ export default function VendorPage() {
           </Button>
         </div>
       </div>
+
+      {error ? (
+          <div className="text-red-500 text-center py-8">{error}</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mx-24 py-16">
+            {products.map((product:any) => (
+              <div
+                key={product._id}
+                className="bg-white rounded-2xl overflow-hidden shadow-lg transition-transform hover:scale-[1.02]"
+              >
+                <div className="relative aspect-[3/4]">
+                  <Image
+                    src={product.images[0] || "/placeholder.svg"}
+                    alt={product.productName}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute top-4 right-4">
+                  </div>
+                  <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-sm font-medium">
+                    {product.productListing}
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold text-lg mb-1">{product.productName}</h3>
+                  <p className="text-gray-600 text-sm mb-2">{product.productBrand}</p>
+                  <div className="flex justify-between items-center">
+                    <p className="font-bold text-lg">PKR {product.productPrice.toLocaleString()}</p>
+                    <p className="text-sm text-gray-500">{product.productSize}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
       {/* Footer */}
       <footer className="w-full bg-[#6b3419] py-10 text-white">

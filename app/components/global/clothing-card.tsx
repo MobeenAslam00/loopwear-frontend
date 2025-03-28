@@ -15,7 +15,7 @@ export function ClothingCard({ imageUrl, title, productId, category, price, acti
             className={`absolute right-3 top-3 z-10 ${
               action === "sale"
                 ? "bg-green-100 text-green-800 hover:bg-green-200"
-                : action === "rentt"
+                : action === "rent"
                   ? "bg-blue-100 text-blue-800 hover:bg-blue-200"
                   : "bg-purple-100 text-purple-800 hover:bg-purple-200"
             }`}

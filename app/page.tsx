@@ -308,10 +308,10 @@ export default function Home() {
             </li>
             <li>
               <Link
-                href="/products?type=buy"
+                href="/become-vendor"
                 className="px-2 sm:px-4 py-1 underline text-sm sm:text-base whitespace-nowrap"
               >
-                Lender
+                Vendor
               </Link>
             </li>
             <li>

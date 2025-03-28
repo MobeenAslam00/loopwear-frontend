@@ -11,7 +11,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Calendar, Plus, X } from "lucide-react"
 import { NotificationModal } from "@/app/components/Modal/NotificationModal"
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 const MAX_FILES = 4
 
 const formSchema = z.object({
@@ -21,7 +20,6 @@ const formSchema = z.object({
   dressPrice: z.string().min(1, "Price is required"),
   dressSize: z.string().min(1, "Please select a size"),
   dressListing: z.string().min(1, "Please select a listing category"),
-  purchaseDate: z.string().min(1, "Purchase date is required"),
   dressDetails: z.string().min(10, "Please provide dress details"),
 })
 
@@ -122,7 +120,6 @@ export function AddDressForm() {
         productPrice: Number.parseFloat(data.dressPrice),
         productSize: data.dressSize,
         productListing: data.dressListing,
-        dateOfPurchase: new Date(data.purchaseDate).toISOString(),
         productDetails: data.dressDetails,
         category: data.category,
         images: imageUrls,
@@ -268,16 +265,6 @@ export function AddDressForm() {
                     <option value="sale">For Sale</option>
                   </select>
                   {errors.dressListing && <p className="text-sm text-red-500">{errors.dressListing.message}</p>}
-                </div>
-
-                {/* Date of Purchase */}
-                <div className="space-y-2">
-                  <label className="text-gray-600 block mb-1">Date of Purchase</label>
-                  <div className="relative">
-                    <Input type="date" {...register("purchaseDate")} className="rounded-xl border-gray-200" />
-                    <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none h-5 w-5" />
-                  </div>
-                  {errors.purchaseDate && <p className="text-sm text-red-500">{errors.purchaseDate.message}</p>}
                 </div>
 
                 {/* Dress Details */}

@@ -56,10 +56,10 @@ export function CreateStoreForm() {
       if (logoFile) {
         const formData = new FormData();
         formData.append("file", logoFile);
-        formData.append("upload_preset", process.env.NEXT_PUBLIC_PRESET_NAME || "loopwear");
+        formData.append("upload_preset", "ml_default");
   
         const cloudinaryResponse = await fetch(
-          `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME || "diml90c1y"}/image/upload`,
+          `https://api.cloudinary.com/v1_1/dyz39yixn/image/upload`,
           {
             method: "POST",
             body: formData,

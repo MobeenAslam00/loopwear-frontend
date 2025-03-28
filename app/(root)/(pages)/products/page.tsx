@@ -36,7 +36,7 @@ interface Filters {
 
 export default function Home() {
   const search = useSearchParams()
-  const type = search.get("type") || "buy"
+  // const type = search.get("type") || "buy"
   const [showPolicy, setShowPolicy] = useState(true)
   const [showFilters, setShowFilters] = useState(false)
   const [products, setProducts] = useState<Product[]>([])
@@ -52,9 +52,9 @@ export default function Home() {
     setError(null)
 
     try {
-      const productListing = type === "buy" ? "sale" : "rent"
+      // const productListing = type === "buy" ? "sale" : "rent"
 
-      let url = `${process.env.NEXT_PUBLIC_LOOP_SERVER}/product/getAllProducts?limit=10&page=1&productListing=${productListing}`
+      let url = `${process.env.NEXT_PUBLIC_LOOP_SERVER}/product/getAllProducts?limit=10&page=1`
 
       if (filters.categories.length > 0) {
         const category = filters.categories[0] 
@@ -83,7 +83,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchProducts()
-  }, [type, filters])
+  }, [filters])
 
   const handleApplyFilters = (newFilters: Filters) => {
     setFilters(newFilters)
@@ -94,14 +94,14 @@ export default function Home() {
       <TopBanner back={true} />
       <SubHeader showSearch={false} />
 
-      {showPolicy && type === "rent" && (
+      {showPolicy &&  (
         <div className="w-full bg-[#F6E7DB]">
           <RentersPolicy onClose={() => setShowPolicy(false)} />
         </div>
       )}
 
       <h1 className="text-[#542D18] text-center text-3xl md:text-4xl font-semibold mt-6">
-        {type === "buy" ? "Products for Sale" : "Products for Rent"}
+        Products for Sale/Rent
       </h1>
 
       <div className="flex justify-between items-center px-4 md:px-16 mt-6">
@@ -162,7 +162,7 @@ export default function Home() {
                 }
                 title={product.productName}
                 price={product.productPrice}
-                action={type === "buy" ? "Buy" : "Rent"}
+                action={product.productListing}
               />
             ))}
           </div>
