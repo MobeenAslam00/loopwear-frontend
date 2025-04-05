@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Kufam:wght@400;500;600;700&display=swap");
+/* @import url('https://fonts.googleapis.com/css2?family=Playwrite+VN:wght@100..400&display=swap'); */
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 36 33% 97%;
+  --foreground: 20 10% 20%;
+
+  --primary: 25 30% 25%;
+  --primary-foreground: 36 33% 97%;
+
+  --secondary: 30 25% 85%;
+  --secondary-foreground: 25 30% 25%;
+
+  --accent: 25 30% 40%;
+  --accent-foreground: 36 33% 97%;
+
+  --muted: 30 25% 90%;
+  --muted-foreground: 25 10% 40%;
+
+  --card: 36 33% 97%;
+  --card-foreground: 20 10% 20%;
+
+  --border: 30 15% 85%;
+  --input: 30 15% 85%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 36 33% 97%;
+
+  --ring: 25 30% 25%;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    /* @apply font-playwrite; */
+  }
+}
+
+/* .font-playfair {
+  font-family: var(--font-playfair);
+} */
+
