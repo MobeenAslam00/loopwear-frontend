@@ -246,7 +246,7 @@ export default function VendorHistory() {
                         </div>
                       ))}
                     </TableCell>
-                    <TableCell className="text-right font-medium">${(order.totalPrice / 100).toFixed(2)}</TableCell>
+                    <TableCell className="text-right font-medium">PKR {(order.totalPrice / 100).toFixed(2)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
