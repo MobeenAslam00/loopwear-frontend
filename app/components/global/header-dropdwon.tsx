@@ -53,7 +53,7 @@ export default function HeaderDropdown() {
                 <DropdownMenuItem asChild>
               <Link href="/vendor" className="flex items-center">
                 <User className="mr-2 h-4 w-4" />
-                <span>Vendor</span>
+                <span>lender</span>
               </Link>
             </DropdownMenuItem> 
             <DropdownMenuItem asChild>

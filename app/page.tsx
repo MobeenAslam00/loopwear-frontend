@@ -316,7 +316,7 @@ export default function Home() {
                 href={store ? "/vendor" : "/become-vendor"}
                 className="px-2 sm:px-4 py-1 underline text-sm sm:text-base whitespace-nowrap"
               >
-                Vendor
+                lender
               </Link>
             </li>
             <li>
